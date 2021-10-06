@@ -8,8 +8,8 @@ namespace Jokenpo.Repositories.Interface
     {
         Guid CreatMatch(Match match);
         Match GetMatchById(Guid id);
-        List<Match> ListaMathAll();
-        Match MatchOpen();
-
+        List<Match> ListMatchAll();
+        Match GetMatchOpen();
+        List<Move> GetMoveInMatchById(Guid id);
     }
 }

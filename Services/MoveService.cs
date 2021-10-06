@@ -24,7 +24,7 @@ namespace Jokenpo.Services
 
         public Guid AddMove(MoveDto moveDto)
         {
-            var move = new Move();
+            Move move = new Move();
             _mapper.Map(moveDto, move);
             var ExistingPlayer = _repositoryPlayer.GetPlayerById(move.JogadorId);
             if (ExistingPlayer != null)

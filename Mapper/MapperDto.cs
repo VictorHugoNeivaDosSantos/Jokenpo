@@ -21,6 +21,10 @@ namespace Jokenpo.Mapper
             CreateMap<MatchDto, Match>()
                 .ForMember(dest => dest.Moves, map => map.MapFrom(src => src.Moves))
                 .ReverseMap();
+
+            CreateMap<Match, MatchTwoDto>()
+              .ForMember(dest => dest.Moves, map => map.MapFrom(src => src.Moves))
+              .ForMember(dest => dest.Id, map => map.MapFrom(src => src.Id));
         }
     }
 }

@@ -6,8 +6,6 @@ using Jokenpo.Repositories.Interface;
 using Jokenpo.Services.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Jokenpo.Services
 {
@@ -16,50 +14,65 @@ namespace Jokenpo.Services
         private readonly IRepositoryMatch _repositoryMatch;
         private readonly IMapper _mapper;
         private readonly IMoveService _serviceMove;
-        public MatchService(IRepositoryMatch repositoryMatch, IMapper mapper)
+        public MatchService(IRepositoryMatch repositoryMatch, IMapper mapper, IMoveService serviceMove)
         {
             _repositoryMatch = repositoryMatch;
             _mapper = mapper;
+            _serviceMove = serviceMove;
         }
 
         public Guid CreateMatch()
         {
-            var match = new Match();
+            Match match = new Match();
+            match.Id = Guid.NewGuid();
+            match.Moves = new List<Move>();
             match.Status = StatusMatch.Aberta;
+            _repositoryMatch.CreatMatch(match);
             return match.Id;
         }
 
-
-        public Guid AddMoveInMatch(MoveDto moveDto)
+        public MatchTwoDto AddMoveInMatch(MoveDto moveDto)
         {
-            var move = new Move();
 
-            var matchOpen = _repositoryMatch.MatchOpen();
-            if (matchOpen == null)
+            var matchOpenInitial = _repositoryMatch.GetMatchOpen();
+
+            if (matchOpenInitial == null)
             {
-                CreateMatch();
+                var matchId = CreateMatch();
+                var move = _mapper.Map<Move>(moveDto);
+                _serviceMove.AddMove(moveDto);
+                var match = _repositoryMatch.GetMatchById(matchId);
+                match.Moves.Add(move);
+                return GetMatchTwoDto(matchId);
             }
             else
             {
-                if (matchOpen.Moves.Count < 3)
+                if (matchOpenInitial.Moves.Count < 2)
                 {
-                    _mapper.Map(moveDto, move);
-                    matchOpen.Moves.Add(move);
-                    return move.Id;
+                    var move = _mapper.Map<Move>(moveDto);
+                    _serviceMove.AddMove(moveDto);
+                    matchOpenInitial.Moves.Add(move);
+                    return GetMatchTwoDto(matchOpenInitial.Id);
                 }
                 else
                 {
-                    _mapper.Map(moveDto, move);
-                    matchOpen.Moves.Add(move);
-                    matchOpen.Status = StatusMatch.Fechada;
-                    return move.Id;
-                    //Chamar metodo de Win
+                    var move = _mapper.Map<Move>(moveDto);
+                    _serviceMove.AddMove(moveDto);
+                    matchOpenInitial.Moves.Add(move);
+                    matchOpenInitial.Status = StatusMatch.Fechada;
+                    return GetMatchTwoDto(matchOpenInitial.Id);
+                    //ImplementarGetResult
                 }
             }
-            matchOpen = _repositoryMatch.MatchOpen();
-            _mapper.Map(moveDto, move);
-            matchOpen.Moves.Add(move);
-            return move.Id;
+
+        }
+
+        public MatchTwoDto GetMatchTwoDto(Guid id)
+        {
+            var list = _repositoryMatch.GetMatchById(id);
+            var listDto = _mapper.Map<MatchTwoDto>(list);
+            return listDto;
+
         }
     }
 }

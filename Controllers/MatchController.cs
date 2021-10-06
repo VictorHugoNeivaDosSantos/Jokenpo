@@ -1,9 +1,6 @@
 ﻿using Jokenpo.Dto;
-using Jokenpo.Enuns;
 using Jokenpo.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 
 namespace Jokenpo.Controllers
 {
@@ -19,10 +16,10 @@ namespace Jokenpo.Controllers
         }
 
         [HttpPost]
-        public Guid AddMatch([FromBody] MoveDto move)
+        public MatchTwoDto AddMatch([FromBody] MoveDto move)
         {
             return _service.AddMoveInMatch(move);
         }
-      
+
     }
 }

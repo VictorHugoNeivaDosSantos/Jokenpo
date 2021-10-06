@@ -5,7 +5,7 @@ namespace Jokenpo.Services.Interfaces
 {
     public interface IMatchService
     {
-        Guid AddMoveInMatch(MoveDto moveDto);
+        MatchTwoDto AddMoveInMatch(MoveDto moveDto);
         Guid CreateMatch();
     }
 }

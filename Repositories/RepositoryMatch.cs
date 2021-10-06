@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using System.Threading.Tasks;
-
 namespace Jokenpo.Repositories
 {
     public class RepositoryMatch : IRepositoryMatch
@@ -29,13 +27,18 @@ namespace Jokenpo.Repositories
             return _context.MatchList().Find(f => f.Id == id);
         }
 
-        public List<Match> ListaMathAll()
+        public List<Match> ListMatchAll()
         {
             return _context.MatchList();
         }
-        public Match MatchOpen()
+        public Match GetMatchOpen()
         {
-            return _context.MatchList().FirstOrDefault(f => f.Status == Enuns.StatusMatch.Aberta);
+            return _context.MatchList().Find(f => f.Status == Enuns.StatusMatch.Aberta);
+        }
+        public List<Move> GetMoveInMatchById(Guid id)
+        {
+            var obje = _context.MatchList().Find(f => f.Id == id);
+            return obje.Moves.ToList();
         }
     }
 }
