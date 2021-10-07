@@ -1,4 +1,5 @@
-﻿using Jokenpo.Models;
+﻿using Jokenpo.Dto;
+using Jokenpo.Models;
 using System;
 using System.Collections.Generic;
 

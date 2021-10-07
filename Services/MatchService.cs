@@ -13,66 +13,93 @@ namespace Jokenpo.Services
     {
         private readonly IRepositoryMatch _repositoryMatch;
         private readonly IMapper _mapper;
-        private readonly IMoveService _serviceMove;
-        public MatchService(IRepositoryMatch repositoryMatch, IMapper mapper, IMoveService serviceMove)
+        private readonly IPlayerService _servicePlayer;
+
+        public MatchService(IRepositoryMatch repositoryMatch, IMapper mapper, IPlayerService servicePlayer)
         {
             _repositoryMatch = repositoryMatch;
             _mapper = mapper;
-            _serviceMove = serviceMove;
+            _servicePlayer = servicePlayer;
         }
 
-        public Guid CreateMatch()
+        private Match CreateMatch()
         {
-            Match match = new Match();
-            match.Id = Guid.NewGuid();
-            match.Moves = new List<Move>();
-            match.Status = StatusMatch.Aberta;
-            _repositoryMatch.CreatMatch(match);
-            return match.Id;
-        }
-
-        public MatchTwoDto AddMoveInMatch(MoveDto moveDto)
-        {
-
-            var matchOpenInitial = _repositoryMatch.GetMatchOpen();
-
-            if (matchOpenInitial == null)
+            Match match = new Match
             {
-                var matchId = CreateMatch();
-                var move = _mapper.Map<Move>(moveDto);
-                _serviceMove.AddMove(moveDto);
-                var match = _repositoryMatch.GetMatchById(matchId);
-                match.Moves.Add(move);
-                return GetMatchTwoDto(matchId);
+                Id = Guid.NewGuid(),
+                Moves = new List<Move>(),
+                Status = StatusMatch.Aberta
+            };
+
+            _repositoryMatch.AddMatch(match);
+            return match;
+        }
+
+        public Guid AddMoveInMatch(MoveDto moveDto)
+        {
+            var match = _repositoryMatch.GetOpenMatch() ?? CreateMatch();
+            var move = _mapper.Map<Move>(moveDto);
+
+            if (_servicePlayer.GetPlayerById(move.JogadorId) != null)
+            {
+
+                if (CheckIfPlayerExistsAtGame(match, move.JogadorId) == false)
+                {
+                    match.Moves.Add(move);
+
+                    if (match.Moves.Count == 3)
+                    {
+                        match.Status = StatusMatch.Fechada;
+                    }
+
+                    return match.Id;
+                }
+
+                throw new Exception("Este jogador já jogou nesta partida");
+            }
+
+            throw new Exception("Jogador não encontrado");
+        }
+
+        public string AlterMoveInMatch(Guid idMatch, Guid moveId, MoveDto move)
+        {
+            var match = _repositoryMatch.GetMatchById(idMatch);
+            if (match.Status == StatusMatch.Aberta)
+            {
+                var edition = match.Moves.Find(f => f.Id == moveId);
+                edition.PlayPay = move.PlayPay;
             }
             else
             {
-                if (matchOpenInitial.Moves.Count < 2)
-                {
-                    var move = _mapper.Map<Move>(moveDto);
-                    _serviceMove.AddMove(moveDto);
-                    matchOpenInitial.Moves.Add(move);
-                    return GetMatchTwoDto(matchOpenInitial.Id);
-                }
-                else
-                {
-                    var move = _mapper.Map<Move>(moveDto);
-                    _serviceMove.AddMove(moveDto);
-                    matchOpenInitial.Moves.Add(move);
-                    matchOpenInitial.Status = StatusMatch.Fechada;
-                    return GetMatchTwoDto(matchOpenInitial.Id);
-                    //ImplementarGetResult
-                }
+                throw new Exception("Partida já finalizada");
             }
 
+            return "Jogada alterada";
         }
 
-        public MatchTwoDto GetMatchTwoDto(Guid id)
+        public string DeletarJogadaInMatch(Guid matchId, Guid moveId)
         {
-            var list = _repositoryMatch.GetMatchById(id);
-            var listDto = _mapper.Map<MatchTwoDto>(list);
-            return listDto;
+            var match = _repositoryMatch.GetMatchById(matchId) ?? throw new Exception("Partida não encontrada");
+            match.Moves.Remove(match.Moves.Find(f => f.Id == moveId));
 
+            return "Jogada excluída";
+        }
+
+        private bool CheckIfPlayerExistsAtGame(Match match, Guid jogadorId)
+        {
+            var result = match.Moves.Find(f => f.JogadorId == f.JogadorId);
+
+            if (result != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public List<MatchTwoDto> GetListaMatch()
+        {
+            return _mapper.Map<List<MatchTwoDto>>(_repositoryMatch.ListMatch());
         }
     }
 }

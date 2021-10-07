@@ -6,10 +6,10 @@ namespace Jokenpo.Repositories.Interface
 {
     public interface IRepositoryMatch
     {
-        Guid CreatMatch(Match match);
+        Guid AddMatch(Match match);
         Match GetMatchById(Guid id);
-        List<Match> ListMatchAll();
-        Match GetMatchOpen();
-        List<Move> GetMoveInMatchById(Guid id);
+        List<Match> ListMatch();
+        Match GetOpenMatch();
+
     }
 }

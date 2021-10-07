@@ -41,10 +41,10 @@ namespace Jokenpo.Repositories
             return _context.PlayersList();
         }
 
-        public Player UpdatePlayer(Guid id, PlayerDto newPlayer)
+        public Player UpdatePlayer(Guid id, PlayerDto editPlayer)
         {
             var player = _context.PlayersList().Find(f => f.Id == id);
-            _mapper.Map(newPlayer, player);
+            _mapper.Map(editPlayer, player);
             return player;
         }
 

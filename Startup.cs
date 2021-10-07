@@ -3,7 +3,6 @@ using Jokenpo.Context;
 using Jokenpo.Mapper;
 using Jokenpo.Repositories;
 using Jokenpo.Repositories.Interface;
-using Jokenpo.Repositories.Interfaces;
 using Jokenpo.Services;
 using Jokenpo.Services.Interfaces;
 using Microsoft.AspNetCore.Builder;
@@ -32,8 +31,6 @@ namespace Jokenpo
             services.AddTransient<IRepositoryPlayer, RepositoryPlayer>();
             services.AddTransient<IPlayerService, PlayerService>();
             services.AddTransient<IJokenpoContext, JokenpoContext>();
-            services.AddTransient<IRepositoryMove, RepositoryMove>();
-            services.AddTransient<IMoveService, MoveService>();
             services.AddTransient<IRepositoryMatch, RepositoryMatch>();
             services.AddTransient<IMatchService, MatchService>();
             services.AddSwaggerGen();

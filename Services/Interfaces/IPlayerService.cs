@@ -7,7 +7,7 @@ namespace Jokenpo.Services.Interfaces
     public interface IPlayerService
     {
         Guid AddPlayer(PlayerDto playerDto);
-        PlayerDto GetPlayer(Guid id);
+        PlayerDto GetPlayerById(Guid id);
         string DeletePlayer(Guid id);
         List<PlayerDto> GetPlayersAll();
     }

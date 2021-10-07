@@ -3,7 +3,6 @@ using Jokenpo.Models;
 using Jokenpo.Repositories.Interface;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Jokenpo.Repositories
 {
@@ -16,7 +15,7 @@ namespace Jokenpo.Repositories
             _context = context;
         }
 
-        public Guid CreatMatch(Match match)
+        public Guid AddMatch(Match match)
         {
             _context.MatchList().Add(match);
             return match.Id;
@@ -27,18 +26,14 @@ namespace Jokenpo.Repositories
             return _context.MatchList().Find(f => f.Id == id);
         }
 
-        public List<Match> ListMatchAll()
+        public List<Match> ListMatch()
         {
             return _context.MatchList();
         }
-        public Match GetMatchOpen()
+        public Match GetOpenMatch()
         {
             return _context.MatchList().Find(f => f.Status == Enuns.StatusMatch.Aberta);
         }
-        public List<Move> GetMoveInMatchById(Guid id)
-        {
-            var obje = _context.MatchList().Find(f => f.Id == id);
-            return obje.Moves.ToList();
-        }
+
     }
 }

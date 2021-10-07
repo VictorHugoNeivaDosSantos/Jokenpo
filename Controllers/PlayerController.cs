@@ -25,7 +25,7 @@ namespace Jokenpo.Controllers
         [HttpGet("{id}")]
         public PlayerDto GetPlayer([FromRoute] Guid id)
         {
-            return _service.GetPlayer(id);
+            return _service.GetPlayerById(id);
         }
 
         [HttpDelete("{id}")]

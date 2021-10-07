@@ -21,14 +21,13 @@ namespace Jokenpo.Services
 
         public Guid AddPlayer(PlayerDto playerDto)
         {
-            var player = new Player();
-            _mapper.Map(playerDto, player);
-            return _repositoryPlayer.AddPlayer(player);
+            var player = _mapper.Map<Player>(playerDto);
+            _repositoryPlayer.AddPlayer(player);
+            return player.Id;
         }
 
-        public PlayerDto GetPlayer(Guid id)
+        public PlayerDto GetPlayerById(Guid id)
         {
-            var playerDto = new PlayerDto();
             var player = _repositoryPlayer.GetPlayerById(id);
 
             if (player == null)
@@ -37,8 +36,7 @@ namespace Jokenpo.Services
             }
             else
             {
-                _mapper.Map(player, playerDto);
-                return playerDto;
+                return _mapper.Map<PlayerDto>(player);
             }
         }
 
