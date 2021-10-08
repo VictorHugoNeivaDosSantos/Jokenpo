@@ -42,7 +42,7 @@ namespace Jokenpo.Services
 
             if (_servicePlayer.GetPlayerById(move.JogadorId) != null)
             {
-              
+
 
                 if (CheckIfPlayerExistsAtGame(match, move.JogadorId) == false)
                 {
@@ -102,6 +102,43 @@ namespace Jokenpo.Services
         public List<MatchTwoDto> GetListaMatch()
         {
             return _mapper.Map<List<MatchTwoDto>>(_repositoryMatch.ListMatch());
+        }
+
+        public PlayerDto GetWinnerInMatchById(Guid matchId)
+        {
+            var match = _repositoryMatch.GetMatchById(matchId);
+            Guid whinner = ProcessingWinner(match.Moves);
+            return _servicePlayer.GetPlayerById(whinner);
+        }
+
+        private Guid ProcessingWinner(List<Move> moves)
+        {
+            var choicePrimary = moves[0].PlayPay;
+            switch (choicePrimary)
+            {
+                case GameParts.Pedra:
+                    if (moves[1].PlayPay != GameParts.Papel && moves[2].PlayPay != GameParts.Papel)
+                    {
+                        return moves[0].JogadorId;
+                    }
+                    break;
+
+                case GameParts.Papel:
+                    if (moves[1].PlayPay != GameParts.Tesoura && moves[2].PlayPay != GameParts.Tesoura)
+                    {
+                        return moves[0].JogadorId;
+                    }
+                    break;
+
+                case GameParts.Tesoura:
+                    if (moves[1].PlayPay != GameParts.Pedra && moves[2].PlayPay != GameParts.Pedra)
+                    {
+                        return moves[0].JogadorId;
+                    }
+                    break;
+            }
+
+            throw new Exception("Vendedor não encontrado.");
         }
     }
 }
