@@ -10,7 +10,7 @@ namespace Jokenpo.Mapper
         {
             CreateMap<PlayerDto, Player>()
                 .ForMember(player => player.Name, dto => dto.MapFrom(src => src.Name))
-                .ForMember(player => player.Email, dto => dto.MapFrom(src => src.Email))
+                .ForMember(player => player.Id, dto => dto.MapFrom(src => src.PlayerId))
                 .ReverseMap();
 
             CreateMap<MoveDto, Move>()
@@ -23,8 +23,7 @@ namespace Jokenpo.Mapper
                 .ReverseMap();
 
             CreateMap<Match, MatchTwoDto>()
-              .ForMember(dest => dest.Moves, map => map.MapFrom(src => src.Moves))
-              .ForMember(dest => dest.Id, map => map.MapFrom(src => src.Id));
+              .ForMember(dest => dest.Moves, map => map.MapFrom(src => src.Moves));
         }
     }
 }

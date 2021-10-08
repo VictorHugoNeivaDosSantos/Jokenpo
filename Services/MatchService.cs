@@ -45,6 +45,7 @@ namespace Jokenpo.Services
 
                 if (CheckIfPlayerExistsAtGame(match, move.JogadorId) == false)
                 {
+                    move.MatchId = match.Id;
                     match.Moves.Add(move);
 
                     if (match.Moves.Count == 3)

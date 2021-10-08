@@ -50,7 +50,7 @@ namespace Jokenpo.Services
             else
             {
                 _repositoryPlayer.DeletarPlayer(player);
-                return "Player deletada com sucesso!";
+                return "Player deletado com sucesso!";
             }
         }
 
