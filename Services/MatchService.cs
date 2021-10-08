@@ -42,6 +42,7 @@ namespace Jokenpo.Services
 
             if (_servicePlayer.GetPlayerById(move.JogadorId) != null)
             {
+              
 
                 if (CheckIfPlayerExistsAtGame(match, move.JogadorId) == false)
                 {
@@ -88,14 +89,14 @@ namespace Jokenpo.Services
 
         private bool CheckIfPlayerExistsAtGame(Match match, Guid jogadorId)
         {
-            var result = match.Moves.Find(f => f.JogadorId == f.JogadorId);
+            var result = match.Moves.Find(f => f.JogadorId == jogadorId);
 
-            if (result != null)
+            if (result == null)
             {
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public List<MatchTwoDto> GetListaMatch()
