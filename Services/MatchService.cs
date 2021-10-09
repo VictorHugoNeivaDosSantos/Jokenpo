@@ -43,7 +43,6 @@ namespace Jokenpo.Services
             if (_servicePlayer.GetPlayerById(move.JogadorId) != null)
             {
 
-
                 if (CheckIfPlayerExistsAtGame(match, move.JogadorId) == false)
                 {
                     move.MatchId = match.Id;
@@ -78,7 +77,6 @@ namespace Jokenpo.Services
 
             return "Jogada alterada";
         }
-
         public string DeletarJogadaInMatch(Guid matchId, Guid moveId)
         {
             var match = _repositoryMatch.GetMatchById(matchId) ?? throw new Exception("Partida não encontrada");
@@ -138,7 +136,7 @@ namespace Jokenpo.Services
                     break;
             }
 
-            throw new Exception("Vendedor não encontrado.");
+            throw new Exception("Ganhador não encontrado.");
         }
     }
 }

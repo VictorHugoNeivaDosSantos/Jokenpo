@@ -28,7 +28,7 @@ namespace Jokenpo.Repositories
 
         public List<Match> ListMatch()
         {
-            return _context.MatchList();
+            return _context.MatchList().FindAll(f => f.Status == Enuns.StatusMatch.Fechada);
         }
         public Match GetOpenMatch()
         {

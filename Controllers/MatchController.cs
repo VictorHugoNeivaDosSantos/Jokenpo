@@ -11,37 +11,42 @@ namespace Jokenpo.Controllers
     [Route("Jokenpo/Match")]
     public class MatchController : ControllerBase
     {
-        private readonly IMatchService _service;
+        private readonly IMatchService _serviceMatch;
 
         public MatchController(IMatchService service)
         {
-            _service = service;
+            _serviceMatch = service;
         }
 
         [HttpPost]
         public Guid AddMatch([FromBody] MoveDto move)
         {
-            return _service.AddMoveInMatch(move);
+            return _serviceMatch.AddMoveInMatch(move);
         }
 
         [HttpPut("{matchId,moveId}")]
         public string AddMatch([FromRoute]Guid matchId, [FromRoute]Guid moveId, [FromBody]MoveDto move)
         {
-            return _service.AlterMoveInMatch(matchId, moveId ,move);
+            return _serviceMatch.AlterMoveInMatch(matchId, moveId ,move);
         }
 
         [HttpDelete("{matchId,moveId}")]
         public string DeleteMoveInMatch([FromRoute] Guid matchId, [FromRoute] Guid moveId)
         {
-            return _service.DeletarJogadaInMatch(matchId, moveId);
+            return _serviceMatch.DeletarJogadaInMatch(matchId, moveId);
         }
 
         [HttpGet]
         public List<MatchTwoDto> GetMatch()
         {
-            return _service.GetListaMatch();
+            return _serviceMatch.GetListaMatch();
         }
 
+        [HttpGet("Winner/{matchId}")]
 
+        public PlayerDto GetWinnerByMatchId([FromRoute]Guid matchId)
+        {
+           return _serviceMatch.GetWinnerInMatchById(matchId);
+        }
     }
 }

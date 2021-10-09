@@ -11,5 +11,6 @@ namespace Jokenpo.Services.Interfaces
         string AlterMoveInMatch(Guid idMatch, Guid moveId,MoveDto move);
         string DeletarJogadaInMatch(Guid matchId, Guid moveId);
         List<MatchTwoDto> GetListaMatch();
+        PlayerDto GetWinnerInMatchById(Guid matchId);
     }
 }

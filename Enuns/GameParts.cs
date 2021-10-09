@@ -2,8 +2,8 @@
 {
     public enum GameParts
     {
-        Pedra = 1,
-        Papel = 2,
-        Tesoura = 3
+        Pedra,
+        Papel,
+        Tesoura 
     };
 }
