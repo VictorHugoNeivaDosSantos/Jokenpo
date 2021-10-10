@@ -39,50 +39,24 @@ namespace Jokenpo.Services
         {
             var match = _repositoryMatch.GetOpenMatch() ?? CreateMatch();
             var move = _mapper.Map<Move>(moveDto);
+            var player = _servicePlayer.GetPlayerById(move.JogadorId);
 
-            if (_servicePlayer.GetPlayerById(move.JogadorId) != null)
-            {
+            if (player == null)
+                throw new Exception("Jogado não encontrado ou jogador inativo.");
 
-                if (CheckIfPlayerExistsAtGame(match, move.JogadorId) == false)
-                {
-                    move.MatchId = match.Id;
-                    match.Moves.Add(move);
+            if (player.Status == StatusPlayer.Desativo)
+                throw new Exception("Jogador desativado");
 
-                    if (match.Moves.Count == 3)
-                    {
-                        match.Status = StatusMatch.Fechada;
-                    }
+            if (CheckIfPlayerExistsAtGame(match, move.JogadorId))
+                throw new Exception("Jogador não encontrado");
 
-                    return match.Id;
-                }
+            move.MatchId = match.Id;
+            match.Moves.Add(move);
 
-                throw new Exception("Este jogador já jogou nesta partida");
-            }
+            if (match.Moves.Count == 3)
+                match.Status = StatusMatch.Fechada;
 
-            throw new Exception("Jogador não encontrado");
-        }
-
-        public string AlterMoveInMatch(Guid idMatch, Guid moveId, MoveDto move)
-        {
-            var match = _repositoryMatch.GetMatchById(idMatch);
-            if (match.Status == StatusMatch.Aberta)
-            {
-                var edition = match.Moves.Find(f => f.Id == moveId);
-                edition.PlayPay = move.PlayPay;
-            }
-            else
-            {
-                throw new Exception("Partida já finalizada");
-            }
-
-            return "Jogada alterada";
-        }
-        public string DeletarJogadaInMatch(Guid matchId, Guid moveId)
-        {
-            var match = _repositoryMatch.GetMatchById(matchId) ?? throw new Exception("Partida não encontrada");
-            match.Moves.Remove(match.Moves.Find(f => f.Id == moveId));
-
-            return "Jogada excluída";
+            return match.Id;
         }
 
         private bool CheckIfPlayerExistsAtGame(Match match, Guid jogadorId)
@@ -90,49 +64,43 @@ namespace Jokenpo.Services
             var result = match.Moves.Find(f => f.JogadorId == jogadorId);
 
             if (result == null)
-            {
                 return false;
-            }
 
             return true;
         }
 
-        public List<MatchTwoDto> GetListaMatch()
+        public List<MatchListDto> GetListMatch()
         {
-            return _mapper.Map<List<MatchTwoDto>>(_repositoryMatch.ListMatch());
+            return _mapper.Map<List<MatchListDto>>(_repositoryMatch.ListMatch());
         }
 
         public PlayerDto GetWinnerInMatchById(Guid matchId)
         {
-            var match = _repositoryMatch.GetMatchById(matchId);
+            var match = _repositoryMatch.GetMatchById(matchId) ??
+                throw new Exception("Partida não encontrada");
+
             Guid whinner = ProcessingWinner(match.Moves);
-            return _servicePlayer.GetPlayerById(whinner);
+            return _mapper.Map<PlayerDto>(_servicePlayer.GetPlayerById(whinner));
         }
 
         private Guid ProcessingWinner(List<Move> moves)
         {
-            var choicePrimary = moves[0].PlayPay;
+            var choicePrimary = moves[0].PlayerMove;
             switch (choicePrimary)
             {
                 case GameParts.Pedra:
-                    if (moves[1].PlayPay != GameParts.Papel && moves[2].PlayPay != GameParts.Papel)
-                    {
+                    if (moves[1].PlayerMove != GameParts.Papel && moves[2].PlayerMove != GameParts.Papel)
                         return moves[0].JogadorId;
-                    }
                     break;
 
                 case GameParts.Papel:
-                    if (moves[1].PlayPay != GameParts.Tesoura && moves[2].PlayPay != GameParts.Tesoura)
-                    {
+                    if (moves[1].PlayerMove != GameParts.Tesoura && moves[2].PlayerMove != GameParts.Tesoura)
                         return moves[0].JogadorId;
-                    }
                     break;
 
                 case GameParts.Tesoura:
-                    if (moves[1].PlayPay != GameParts.Pedra && moves[2].PlayPay != GameParts.Pedra)
-                    {
+                    if (moves[1].PlayerMove != GameParts.Pedra && moves[2].PlayerMove != GameParts.Pedra)
                         return moves[0].JogadorId;
-                    }
                     break;
             }
 

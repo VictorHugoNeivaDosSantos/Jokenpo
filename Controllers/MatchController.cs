@@ -1,5 +1,4 @@
 ﻿using Jokenpo.Dto;
-using Jokenpo.Models;
 using Jokenpo.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -18,35 +17,26 @@ namespace Jokenpo.Controllers
             _serviceMatch = service;
         }
 
+        /// <summary>
+        /// Rota utilizada para adicionar jogada do jogador em uma partida.
+        /// </summary>
         [HttpPost]
-        public Guid AddMatch([FromBody] MoveDto move)
+        public Guid AddMoveInMatch([FromBody] MoveDto move)
         {
             return _serviceMatch.AddMoveInMatch(move);
-        }
-
-        [HttpPut("{matchId,moveId}")]
-        public string AddMatch([FromRoute]Guid matchId, [FromRoute]Guid moveId, [FromBody]MoveDto move)
-        {
-            return _serviceMatch.AlterMoveInMatch(matchId, moveId ,move);
-        }
-
-        [HttpDelete("{matchId,moveId}")]
-        public string DeleteMoveInMatch([FromRoute] Guid matchId, [FromRoute] Guid moveId)
-        {
-            return _serviceMatch.DeletarJogadaInMatch(matchId, moveId);
-        }
+        }   
 
         [HttpGet]
-        public List<MatchTwoDto> GetMatch()
+        public List<MatchListDto> GetMatch()
         {
-            return _serviceMatch.GetListaMatch();
+            return _serviceMatch.GetListMatch();
         }
 
         [HttpGet("Winner/{matchId}")]
 
-        public PlayerDto GetWinnerByMatchId([FromRoute]Guid matchId)
+        public PlayerDto GetWinnerByMatchId([FromRoute] Guid matchId)
         {
-           return _serviceMatch.GetWinnerInMatchById(matchId);
+            return _serviceMatch.GetWinnerInMatchById(matchId);
         }
     }
 }

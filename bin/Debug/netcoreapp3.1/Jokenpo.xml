@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Jokenpo</name>
+    </assembly>
+    <members>
+        <member name="M:Jokenpo.Controllers.MatchController.AddMoveInMatch(Jokenpo.Dto.MoveDto)">
+            <summary>
+            Rota utilizada para adicionar jogada do jogador em uma partida.
+            </summary>
+        </member>
+    </members>
+</doc>

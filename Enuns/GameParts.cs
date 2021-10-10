@@ -4,6 +4,6 @@
     {
         Pedra,
         Papel,
-        Tesoura 
+        Tesoura
     };
 }

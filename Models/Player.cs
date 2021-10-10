@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Jokenpo.Enuns;
+using System;
 
 namespace Jokenpo.Models
 {
@@ -7,5 +8,6 @@ namespace Jokenpo.Models
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
         public string Email { get; set; }
+        public StatusPlayer Status{ get; set; }
     }
 }

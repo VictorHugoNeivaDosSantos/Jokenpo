@@ -22,36 +22,30 @@ namespace Jokenpo.Services
         public Guid AddPlayer(PlayerDto playerDto)
         {
             var player = _mapper.Map<Player>(playerDto);
+            player.Status = Enuns.StatusPlayer.Ativo;
             _repositoryPlayer.AddPlayer(player);
             return player.Id;
         }
 
         public PlayerDto GetPlayerById(Guid id)
         {
-            var player = _repositoryPlayer.GetPlayerById(id);
+            var player = _mapper.Map<PlayerDto>(_repositoryPlayer.GetPlayerById(id));
 
             if (player == null)
-            {
                 throw new Exception("Player não encontrado!");
-            }
-            else
-            {
-                return _mapper.Map<PlayerDto>(player);
-            }
+
+            return player;
+
         }
 
         public string DeletePlayer(Guid id)
         {
             var player = _repositoryPlayer.GetPlayerById(id);
             if (player == null)
-            {
                 throw new Exception("Player não encontrado!");
-            }
-            else
-            {
-                _repositoryPlayer.DeletarPlayer(player);
-                return "Player deletado com sucesso!";
-            }
+
+            player.Status = Enuns.StatusPlayer.Desativo;
+            return "Player desativado";
         }
 
         public List<PlayerDto> GetPlayersAll()

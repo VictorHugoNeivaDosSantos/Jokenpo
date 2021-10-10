@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace Jokenpo
 {
@@ -33,8 +36,11 @@ namespace Jokenpo
             services.AddTransient<IJokenpoContext, JokenpoContext>();
             services.AddTransient<IRepositoryMatch, RepositoryMatch>();
             services.AddTransient<IMatchService, MatchService>();
-            services.AddSwaggerGen();
-
+            services.AddSwaggerGen(c => {
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

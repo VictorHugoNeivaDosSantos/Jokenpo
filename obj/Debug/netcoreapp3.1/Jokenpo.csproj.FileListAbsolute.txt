@@ -26,3 +26,5 @@ C:\Users\victo\source\repos\Jokenpo\obj\Debug\netcoreapp3.1\Jokenpo.csproj.CopyC
 C:\Users\victo\source\repos\Jokenpo\obj\Debug\netcoreapp3.1\Jokenpo.dll
 C:\Users\victo\source\repos\Jokenpo\obj\Debug\netcoreapp3.1\Jokenpo.pdb
 C:\Users\victo\source\repos\Jokenpo\obj\Debug\netcoreapp3.1\Jokenpo.genruntimeconfig.cache
+C:\Users\victo\source\repos\Jokenpo\bin\Debug\netcoreapp3.1\Jokenpo.xml
+C:\Users\victo\source\repos\Jokenpo\obj\Debug\netcoreapp3.1\Jokenpo.xml
