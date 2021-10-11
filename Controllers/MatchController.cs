@@ -26,12 +26,18 @@ namespace Jokenpo.Controllers
             return _serviceMatch.AddMoveInMatch(move);
         }   
 
+        /// <summary>
+        /// Rota utilizada para retornar uma lista de todas as partidas já concluída.
+        /// </summary>
         [HttpGet]
         public List<MatchListDto> GetMatch()
         {
             return _serviceMatch.GetListMatch();
         }
-
+  
+        /// <summary>
+        /// Rota utilizada para obter o ganhador de uma partida
+        /// </summary>
         [HttpGet("Winner/{matchId}")]
 
         public PlayerDto GetWinnerByMatchId([FromRoute] Guid matchId)

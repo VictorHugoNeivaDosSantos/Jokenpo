@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\victo\\source\\repos\\Jokenpo\\Jokenpo.csproj": {}
+    "C:\\Users\\ADM\\Desktop\\Jokenpo\\Jokenpo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\victo\\source\\repos\\Jokenpo\\Jokenpo.csproj": {
+    "C:\\Users\\ADM\\Desktop\\Jokenpo\\Jokenpo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\victo\\source\\repos\\Jokenpo\\Jokenpo.csproj",
+        "projectUniqueName": "C:\\Users\\ADM\\Desktop\\Jokenpo\\Jokenpo.csproj",
         "projectName": "Jokenpo",
-        "projectPath": "C:\\Users\\victo\\source\\repos\\Jokenpo\\Jokenpo.csproj",
-        "packagesPath": "C:\\Users\\victo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\victo\\source\\repos\\Jokenpo\\obj\\",
+        "projectPath": "C:\\Users\\ADM\\Desktop\\Jokenpo\\Jokenpo.csproj",
+        "packagesPath": "C:\\Users\\ADM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ADM\\Desktop\\Jokenpo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\victo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ADM\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -67,7 +67,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
