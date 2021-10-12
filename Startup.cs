@@ -36,7 +36,8 @@ namespace Jokenpo
             services.AddTransient<IJokenpoContext, JokenpoContext>();
             services.AddTransient<IRepositoryMatch, RepositoryMatch>();
             services.AddTransient<IMatchService, MatchService>();
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);

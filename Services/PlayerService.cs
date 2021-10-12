@@ -21,6 +21,12 @@ namespace Jokenpo.Services
 
         public Guid AddPlayer(PlayerDto playerDto)
         {
+            if (playerDto.Email == null)
+                throw new Exception("E-mail não informado!");
+
+            if (playerDto.Name == null)
+                playerDto.Name = playerDto.Email;
+
             var player = _mapper.Map<Player>(playerDto);
             player.Status = Enuns.StatusPlayer.Ativo;
             _repositoryPlayer.AddPlayer(player);

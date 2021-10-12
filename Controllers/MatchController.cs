@@ -24,7 +24,7 @@ namespace Jokenpo.Controllers
         public Guid AddMoveInMatch([FromBody] MoveDto move)
         {
             return _serviceMatch.AddMoveInMatch(move);
-        }   
+        }
 
         /// <summary>
         /// Rota utilizada para retornar uma lista de todas as partidas já concluída.
@@ -34,7 +34,7 @@ namespace Jokenpo.Controllers
         {
             return _serviceMatch.GetListMatch();
         }
-  
+
         /// <summary>
         /// Rota utilizada para obter o ganhador de uma partida
         /// </summary>

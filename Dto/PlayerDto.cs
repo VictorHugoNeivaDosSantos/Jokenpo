@@ -1,5 +1,4 @@
-﻿using Jokenpo.Enuns;
-using System;
+﻿using System;
 
 namespace Jokenpo.Dto
 {

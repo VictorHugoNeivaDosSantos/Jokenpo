@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Jokenpo.Context;
-using Jokenpo.Dto;
 using Jokenpo.Models;
 using Jokenpo.Repositories.Interface;
 using System;
