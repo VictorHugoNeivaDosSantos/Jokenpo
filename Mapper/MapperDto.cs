@@ -11,7 +11,7 @@ namespace Jokenpo.Mapper
             CreateMap<PlayerDto, Player>()
                 .ForMember(player => player.Name, dto => dto.MapFrom(src => src.Name))
                 .ForMember(player => player.Id, dto => dto.MapFrom(src => src.PlayerId))
-                .ForMember(player => player.Status, dto => dto.MapFrom(src => src.Status))
+                .ForMember(player => player.Email, dto => dto.MapFrom(src => src.Email))
                 .ReverseMap();
 
             CreateMap<MoveDto, Move>()

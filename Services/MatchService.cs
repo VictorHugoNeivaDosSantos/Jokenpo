@@ -104,7 +104,7 @@ namespace Jokenpo.Services
                     break;
             }
 
-            throw new Exception("Ganhador não encontrado.");
+            throw new Exception("Empate.");
         }
     }
 }

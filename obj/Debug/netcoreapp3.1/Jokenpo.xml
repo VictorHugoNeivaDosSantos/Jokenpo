@@ -34,5 +34,10 @@
             Rota utilizada para desativar um player.
             </summary>
         </member>
+        <member name="M:Jokenpo.Controllers.PlayerController.GetPlayerDto">
+            <summary>
+            Retorna uma lista de todos os playes cadastrado no projeto.
+            </summary>
+        </member>
     </members>
 </doc>

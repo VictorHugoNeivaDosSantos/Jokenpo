@@ -32,7 +32,7 @@ namespace Jokenpo.Controllers
         [HttpGet("{id}")]
         public PlayerDto GetPlayer([FromRoute] Guid id)
         {
-            return _service.GetPlayerById(id);
+            return _service.GetPlayerByIdDto(id);
         }
 
         /// <summary>
@@ -43,6 +43,10 @@ namespace Jokenpo.Controllers
         {
             return _service.DeletePlayer(id);
         }
+
+        /// <summary>
+        /// Retorna uma lista de todos os playes cadastrado no projeto.
+        /// </summary>
         [HttpGet]
         public List<PlayerDto> GetPlayerDto()
         {

@@ -27,7 +27,7 @@ namespace Jokenpo.Services
             return player.Id;
         }
 
-        public PlayerDto GetPlayerById(Guid id)
+        public PlayerDto GetPlayerByIdDto(Guid id)
         {
             var player = _mapper.Map<PlayerDto>(_repositoryPlayer.GetPlayerById(id));
 
@@ -35,7 +35,6 @@ namespace Jokenpo.Services
                 throw new Exception("Player não encontrado!");
 
             return player;
-
         }
 
         public string DeletePlayer(Guid id)
@@ -54,6 +53,16 @@ namespace Jokenpo.Services
             var player = _repositoryPlayer.GetPlayersAll();
             _mapper.Map(player, playersDto);
             return playersDto;
+        }
+
+        public Player GetPlayerById(Guid id)
+        {
+            var player = _repositoryPlayer.GetPlayerById(id);
+
+            if (player == null)
+                throw new Exception("Player não encontrado!");
+
+            return player;
         }
     }
 }

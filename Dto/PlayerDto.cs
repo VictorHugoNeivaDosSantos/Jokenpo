@@ -7,7 +7,6 @@ namespace Jokenpo.Dto
     {
         public Guid PlayerId { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
-        public StatusPlayer Status { get; set; } 
-
+        public string Email { get; set; }
     }
 }

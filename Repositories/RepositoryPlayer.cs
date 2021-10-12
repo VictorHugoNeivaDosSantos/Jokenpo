@@ -25,11 +25,6 @@ namespace Jokenpo.Repositories
             return player.Id;
         }
 
-        public void DeletarPlayer(Player player)
-        {
-            _context.PlayersList().Remove(player);
-        }
-
         public Player GetPlayerById(Guid id)
         {
             var player = _context.PlayersList().Find(f => f.Id == id);
@@ -40,14 +35,6 @@ namespace Jokenpo.Repositories
         {
             return _context.PlayersList();
         }
-
-        public Player UpdatePlayer(Guid id, PlayerDto editPlayer)
-        {
-            var player = _context.PlayersList().Find(f => f.Id == id);
-            _mapper.Map(editPlayer, player);
-            return player;
-        }
-
 
     }
 }
