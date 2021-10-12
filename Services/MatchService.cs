@@ -42,13 +42,13 @@ namespace Jokenpo.Services
             var player = _servicePlayer.GetPlayerById(move.JogadorId);
 
             if (player == null)
-                throw new Exception("Jogado não encontrado ou jogador inativo.");
+                throw new Exception("Jogador não encontrado.");
 
             if (player.Status == StatusPlayer.Desativo)
                 throw new Exception("Jogador desativado");
 
             if (CheckIfPlayerExistsAtGame(match, move.JogadorId))
-                throw new Exception("Jogador não encontrado");
+                throw new Exception("Jogador já existe nesta partida.");
 
             move.MatchId = match.Id;
             match.Moves.Add(move);
